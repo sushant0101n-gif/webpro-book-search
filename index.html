@@ -1,702 +1,158 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Search | Sushant Neupane</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week 9 - Book Search Assignment</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #1f4e79;
+      --secondary: #2d6a4f;
+      --text: #1b2430;
+      --muted: #5d6b7a;
+      --line: #dfe7f1;
+      --shadow: rgba(31, 78, 121, 0.12);
+    }
 
-    <style>
-        :root {
-            --green: #205943;
-            --cream: #f5f5eb;
-            --lime: #c9e86b;
-            --orange: #e66c4d;
-            --text: #202c26;
-            --muted: #65736a;
-            --border: #d5d9ce;
-            --white: #fffef9;
-        }
+    * { box-sizing: border-box; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #edf4ff, #eefaf4);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 18px;
+    }
 
-        body {
-            background-color: var(--cream);
-            background-image: radial-gradient(#d9ddce 1px, transparent 1px);
-            background-size: 22px 22px;
-            color: var(--text);
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-        }
+    .card {
+      width: min(760px, 100%);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 18px 40px var(--shadow);
+      overflow: hidden;
+    }
 
-        .container {
-            max-width: 1120px;
-            margin: auto;
-            padding: 20px;
-        }
+    .header {
+      background: linear-gradient(135deg, var(--primary), #3c7bb4);
+      color: white;
+      padding: 30px 32px;
+    }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0 25px;
-            border-bottom: 1px solid var(--border);
-        }
+    .tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--green);
-            font-weight: bold;
-            letter-spacing: 2px;
-            font-size: 14px;
-        }
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
 
-        .logo span {
-            background: var(--lime);
-            color: var(--green);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Georgia, serif;
-            font-size: 23px;
-        }
+    .content {
+      padding: 30px 32px 36px;
+    }
 
-        .header-link {
-            background: var(--green);
-            color: white;
-            padding: 14px 22px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
+    p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
 
-        .header-link:hover {
-            background: var(--lime);
-            color: var(--green);
-        }
+    .repo-box {
+      background: #f7fafc;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px 20px;
+      margin-top: 20px;
+    }
 
-        .hero {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 40px;
-            margin: 75px 0 45px;
-        }
+    .repo-box h2 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
 
-        .tag {
-            color: var(--orange);
-            font-size: 13px;
-            letter-spacing: 2px;
-            font-weight: bold;
-            margin-bottom: 18px;
-        }
+    .repo-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      background: var(--secondary);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
 
-        h1 {
-            font-family: Georgia, serif;
-            font-size: clamp(48px, 8vw, 82px);
-            line-height: 1.05;
-            font-weight: normal;
-        }
+    .live-link {
+      display: inline-block;
+      margin: 12px 0 0 8px;
+      padding: 12px 18px;
+      border: 1px solid var(--secondary);
+      border-radius: 10px;
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
 
-        h1 span {
-            color: var(--green);
-            font-style: italic;
-        }
+    .repo-link:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
 
-        .hero-note {
-            max-width: 245px;
-            border-left: 3px solid var(--lime);
-            padding: 12px 18px;
-            color: var(--muted);
-            line-height: 1.7;
-            font-size: 14px;
-        }
-
-        .student-card {
-            background: var(--green);
-            color: white;
-            padding: 25px 30px;
-            border-left: 5px solid var(--lime);
-            margin-bottom: 45px;
-        }
-
-        .student-card small {
-            color: var(--lime);
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
-
-        .student-card h2 {
-            font-family: Georgia, serif;
-            font-size: 27px;
-            font-weight: normal;
-            margin: 8px 0;
-        }
-
-        .student-card p {
-            color: #e0e9df;
-            font-size: 14px;
-        }
-
-        .section-label {
-            color: var(--muted);
-            font-size: 13px;
-            letter-spacing: 2px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        #search-section {
-            margin-bottom: 40px;
-        }
-
-        #search-form {
-            display: flex;
-            gap: 12px;
-        }
-
-        #search-input {
-            flex: 1;
-            min-width: 0;
-            padding: 16px 18px;
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            font-size: 16px;
-            color: var(--text);
-            outline: none;
-        }
-
-        #search-input:focus {
-            border-color: var(--green);
-            box-shadow: 0 0 0 2px #20594320;
-        }
-
-        button {
-            background: var(--green);
-            color: white;
-            border: 1px solid var(--green);
-            padding: 14px 28px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            background: var(--lime);
-            color: var(--green);
-        }
-
-        button:disabled {
-            opacity: 0.7;
-            cursor: wait;
-        }
-
-        #status {
-            color: var(--muted);
-            margin-top: 14px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        #status.error {
-            color: #bd4939;
-        }
-
-        .results-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--text);
-            border-bottom: 1px solid var(--border);
-            padding: 20px 0;
-        }
-
-        .results-heading h2 {
-            font-family: Georgia, serif;
-            font-size: 27px;
-            font-weight: normal;
-        }
-
-        #result-count {
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        #results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-            gap: 22px;
-            margin: 25px 0 50px;
-        }
-
-        .book-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px #20594318;
-        }
-
-        .cover-wrap {
-            height: 235px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #e9eddf;
-            padding: 12px;
-        }
-
-        .book-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        .no-cover {
-            font-size: 48px;
-        }
-
-        .card-body {
-            padding: 15px;
-        }
-
-        .card-body h3 {
-            font-family: Georgia, serif;
-            font-size: 16px;
-            font-weight: normal;
-            line-height: 1.4;
-        }
-
-        .card-body p {
-            font-size: 12px;
-            color: var(--muted);
-            margin-top: 8px;
-            line-height: 1.5;
-        }
-
-        .skeleton {
-            border: 1px solid var(--border);
-            overflow: hidden;
-            background: var(--white);
-        }
-
-        .skeleton-img {
-            height: 235px;
-        }
-
-        .skeleton-body {
-            padding: 15px;
-        }
-
-        .skeleton-line {
-            height: 12px;
-            margin-bottom: 10px;
-            background: linear-gradient(
-                90deg,
-                #e0e5d8 25%,
-                #f5f5eb 50%,
-                #e0e5d8 75%
-            );
-            background-size: 200% 100%;
-            animation: shimmer 1.3s infinite;
-        }
-
-        .skeleton-line.short {
-            width: 60%;
-        }
-
-        .skeleton-img {
-            background: linear-gradient(
-                90deg,
-                #e0e5d8 25%,
-                #f5f5eb 50%,
-                #e0e5d8 75%
-            );
-            background-size: 200% 100%;
-            animation: shimmer 1.3s infinite;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 13px;
-            height: 13px;
-            border: 2px solid #ffffff80;
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            vertical-align: middle;
-            margin-right: 6px;
-        }
-
-        .empty-panel {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 35px 16px;
-            color: var(--muted);
-            background: var(--white);
-            border: 1px dashed var(--border);
-        }
-
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 25px 0;
-            margin-top: 45px;
-            color: var(--muted);
-            font-size: 12px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes shimmer {
-            to {
-                background-position: -200% 0;
-            }
-        }
-
-        @media (max-width: 650px) {
-            header {
-                gap: 10px;
-            }
-
-            .logo {
-                font-size: 11px;
-                letter-spacing: 1px;
-            }
-
-            .header-link {
-                font-size: 10px;
-                padding: 12px;
-            }
-
-            .hero {
-                flex-direction: column;
-                align-items: flex-start;
-                margin: 55px 0 35px;
-                gap: 25px;
-            }
-
-            .hero-note {
-                max-width: 100%;
-            }
-
-            #search-form {
-                flex-direction: column;
-            }
-
-            #search-form button {
-                width: 100%;
-            }
-
-            #results-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 12px;
-            }
-
-            .cover-wrap {
-                height: 190px;
-            }
-
-            .results-heading h2 {
-                font-size: 23px;
-            }
-
-            footer {
-                flex-direction: column;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-    </style>
+    .live-link:hover {
+      transform: translateY(-1px);
+      background: #edf5ef;
+    }
+  </style>
 </head>
-
 <body>
+  <main class="card">
+    <header class="header">
+      <div class="tag">Book Search · Web Programming</div>
+      <h1>Book Search App</h1>
+    </header>
 
-    <div class="container">
+    <section class="content">
+      <p>
+        This assignment demonstrates a Book Search application using the
+        Open Library API. Users can search for books and view their details.
+      </p>
 
-        <header>
-            <div class="logo">
-                <span>W</span>
-                WEB PROGRAMMING
-            </div>
+      <div class="repo-box">
+        <h2>Repository</h2>
+        <p>GitHub: sushant0101n-gif/webpro-book-search</p>
 
-            <a class="header-link"
-               href="https://sushant0101n-gif.github.io/web-programming-202537254-/">
-                MAIN WEBSITE ↗
-            </a>
-        </header>
+        <a class="repo-link"
+           href="https://github.com/sushant0101n-gif/webpro-book-search"
+           target="_blank" rel="noreferrer">
+          Open Repository
+        </a>
 
-        <section class="hero">
-            <div>
-                <p class="tag">A WORLD OF STORIES</p>
-                <h1>Find your next <span>favorite book.</span></h1>
-            </div>
-
-            <div class="hero-note">
-                Explore books from around the world.
-                Search by title or author and discover
-                something new to read.
-            </div>
-        </section>
-
-        <section class="student-card">
-            <small>CREATED BY</small>
-            <h2>Sushant Neupane</h2>
-            <p>Computer Engineering · Gachon University · 3rd Semester</p>
-        </section>
-
-        <main>
-
-            <section id="search-section">
-                <p class="section-label">FIND A BOOK</p>
-
-                <form id="search-form">
-                    <input
-                        type="text"
-                        id="search-input"
-                        placeholder="Search books or authors..."
-                        aria-label="Search by book title or author"
-                        autocomplete="off"
-                        required
-                    >
-
-                    <button type="submit" id="search-btn">
-                        Search ↗
-                    </button>
-                </form>
-
-                <p id="status" role="status" aria-live="polite">
-                    Search by book title or author to get started.
-                </p>
-            </section>
-
-            <section id="results-section">
-                <div class="results-heading">
-                    <h2>Explore Books</h2>
-                    <span id="result-count">12 books per search</span>
-                </div>
-
-                <div id="results-grid"></div>
-            </section>
-
-        </main>
-
-        <footer>
-            <span>BOOK SEARCH APP · WEB PROGRAMMING</span>
-            <span>POWERED BY OPEN LIBRARY</span>
-        </footer>
-
-    </div>
-
-    <script>
-        const form = document.getElementById('search-form');
-        const input = document.getElementById('search-input');
-        const status = document.getElementById('status');
-        const grid = document.getElementById('results-grid');
-        const btn = document.getElementById('search-btn');
-        const resultCount = document.getElementById('result-count');
-
-        let activeRequest = 0;
-
-        function setStatus(type, message) {
-            status.className = type;
-            status.textContent = message;
-        }
-
-        function showSkeletons() {
-            grid.replaceChildren();
-
-            for (let i = 0; i < 6; i++) {
-                const skeleton = document.createElement('div');
-                skeleton.className = 'skeleton';
-                skeleton.setAttribute('aria-hidden', 'true');
-
-                skeleton.innerHTML =
-                    '<div class="skeleton-img"></div>' +
-                    '<div class="skeleton-body">' +
-                        '<div class="skeleton-line"></div>' +
-                        '<div class="skeleton-line short"></div>' +
-                    '</div>';
-
-                grid.appendChild(skeleton);
-            }
-        }
-
-        function renderResults(books) {
-            grid.replaceChildren();
-
-            books.forEach(book => {
-                const card = document.createElement('article');
-                card.className = 'book-card';
-
-                const coverWrap = document.createElement('div');
-                coverWrap.className = 'cover-wrap';
-
-                if (book.cover_i) {
-                    const img = document.createElement('img');
-
-                    img.src =
-                        'https://covers.openlibrary.org/b/id/' +
-                        encodeURIComponent(book.cover_i) + '-M.jpg';
-
-                    img.alt = 'Cover of ' + (book.title || 'book');
-                    img.loading = 'lazy';
-
-                    img.onerror = function() {
-                        coverWrap.replaceChildren();
-
-                        const placeholder = document.createElement('div');
-                        placeholder.className = 'no-cover';
-                        placeholder.textContent = '📚';
-
-                        coverWrap.appendChild(placeholder);
-                    };
-
-                    coverWrap.appendChild(img);
-                } else {
-                    const placeholder = document.createElement('div');
-                    placeholder.className = 'no-cover';
-                    placeholder.textContent = '📚';
-
-                    coverWrap.appendChild(placeholder);
-                }
-
-                const cardBody = document.createElement('div');
-                cardBody.className = 'card-body';
-
-                const title = document.createElement('h3');
-                title.textContent = book.title || 'Unknown title';
-
-                const details = document.createElement('p');
-                const author = book.author_name?.[0] || 'Unknown author';
-                const year = book.first_publish_year || '';
-
-                details.textContent =
-                    author + (year ? ' · ' + year : '');
-
-                cardBody.append(title, details);
-                card.append(coverWrap, cardBody);
-                grid.appendChild(card);
-            });
-        }
-
-        async function searchBooks(query) {
-            const requestId = ++activeRequest;
-
-            const url =
-                'https://openlibrary.org/search.json?q=' +
-                encodeURIComponent(query) +
-                '&limit=12';
-
-            btn.disabled = true;
-            btn.innerHTML =
-                '<span class="spinner"></span>Searching...';
-
-            setStatus('', 'Searching for "' + query + '"...');
-            showSkeletons();
-
-            try {
-                const response = await fetch(url);
-
-                if (!response.ok) {
-                    throw new Error('HTTP ' + response.status);
-                }
-
-                const data = await response.json();
-
-                if (requestId !== activeRequest) return;
-
-                const books = Array.isArray(data.docs)
-                    ? data.docs
-                    : [];
-
-                if (books.length === 0) {
-                    grid.replaceChildren();
-                    resultCount.textContent = '0 books found';
-
-                    const empty = document.createElement('div');
-                    empty.className = 'empty-panel';
-                    empty.textContent =
-                        '📭 No books found for "' + query +
-                        '" — try another search.';
-
-                    grid.appendChild(empty);
-                    setStatus('empty', 'No results found.');
-                    return;
-                }
-
-                renderResults(books);
-
-                const count = Number(data.numFound) || books.length;
-
-                resultCount.textContent = books.length + ' books displayed';
-
-                setStatus(
-                    '',
-                    'Found ' + count.toLocaleString() +
-                    ' results for "' + query +
-                    '". Showing up to ' + books.length + ' books.'
-                );
-
-            } catch (error) {
-                if (requestId !== activeRequest) return;
-
-                grid.replaceChildren();
-                resultCount.textContent = 'Search unavailable';
-
-                setStatus(
-                    'error',
-                    '⚠️ Could not load books. Check your internet connection and try again.'
-                );
-
-            } finally {
-                if (requestId === activeRequest) {
-                    btn.disabled = false;
-                    btn.textContent = 'Search ↗';
-                }
-            }
-        }
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const query = input.value.trim();
-
-            if (query) {
-                searchBooks(query);
-            }
-        });
-    </script>
-
+        <a class="live-link"
+           href="https://sushant0101n-gif.github.io/webpro-book-search/"
+           target="_blank" rel="noreferrer">
+          Open Live Page
+        </a>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
+```
